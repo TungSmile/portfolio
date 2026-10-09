@@ -25,12 +25,12 @@ export const Footer: React.FC = () => {
 
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-white/10 text-xs sm:text-sm text-[#D7E2EA]/60 uppercase tracking-wider">
           <div className="flex items-center gap-2">
-            <span>© {new Date().getFullYear()} JACK — 3D CREATOR</span>
+            <span>© {new Date().getFullYear()} Dao Thanh Tung</span>
           </div>
 
           <div className="flex items-center gap-6">
             <a href="mailto:jack@3dcreator.design" className="hover:text-white transition-colors flex items-center gap-1.5 no-underline">
-              <Mail size={14} /> jack@3dcreator.design
+              <Mail size={14} /> tungmonkey1101@gmail.com
             </a>
             <button
               onClick={scrollToTop}
