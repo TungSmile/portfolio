@@ -13,14 +13,13 @@ export const Footer: React.FC = () => {
         <FadeIn delay={0} y={20} className="mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs uppercase tracking-widest text-[#BBCCD7]">
             <Sparkles size={14} className="text-[#B600A8]" />
-            Ready to bring your ideas to life
+            {/* Ready to bring your ideas to life */}
           </div>
         </FadeIn>
 
         <FadeIn delay={0.1} y={25} className="mb-12">
           <h2 className="hero-heading font-black uppercase text-3xl sm:text-5xl md:text-6xl tracking-tight m-0">
-            Let&apos;s Create Something Unforgettable
-          </h2>
+            Vẫn còn nhiều dự án sẽ được cập nhập trong thời gian tới          </h2>
         </FadeIn>
 
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-white/10 text-xs sm:text-sm text-[#D7E2EA]/60 uppercase tracking-wider">
@@ -29,7 +28,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="mailto:jack@3dcreator.design" className="hover:text-white transition-colors flex items-center gap-1.5 no-underline">
+            <a href="mailto:tungmonkey1101@gmail.com" className="hover:text-white transition-colors flex items-center gap-1.5 no-underline">
               <Mail size={14} /> tungmonkey1101@gmail.com
             </a>
             <button

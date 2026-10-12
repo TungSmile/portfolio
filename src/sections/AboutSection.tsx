@@ -61,15 +61,14 @@ export const AboutSection: React.FC = () => {
         {/* Heading */}
         <FadeIn delay={0} y={40} className="mb-10 sm:mb-14 md:mb-16">
           <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center text-[clamp(3rem,12vw,160px)] m-0">
-            About me
+            Lời Tựa
           </h2>
         </FadeIn>
 
         {/* Animated paragraph */}
         <div className="w-full">
           <AnimatedText
-            text="Lập trình viên Game với hơn 3 năm kinh nghiệm phát triển game trên đa nền tảng (PC, Mobile, Web) sử dụng Cocos Engine.
-Có thế mạnh trong việc tối ưu hóa hiệu năng (performance), thiết kế Pa giúp kích thích nhu cầu tải về thực tế cũng như tăng xu hướng gắn bó và chất lượng user . Đã tham gia phát triển thành công 1 vài tựa game xuất bản lên Google Play/App Store."
+            text="Đây là Portfolio bản thân mình xây dựng trong sự nghiệp làm game gần 5 năm của mình \n Hãy cùng khám phá các dự án nổi bật của mình bên dưới để hiểu rõ hơn về phong cách thiết kế và quy trình làm việc của mình."
           />
         </div>
       </div>
