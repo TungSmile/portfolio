@@ -4,10 +4,15 @@ export interface IProject extends Document {
   id: string;
   title: string;
   category: string;
-  col1Img1: string;
-  col1Img2: string;
-  col2Img: string;
+  description?: string;
+  role?: string;
+  year?: string;
+  tags?: string[];
+  col1Img1?: string;
+  col1Img2?: string;
+  col2Img?: string;
   link?: string;
+  htmlBase64?: string;
   order?: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -28,28 +33,48 @@ const ProjectSchema: Schema = new Schema(
     },
     category: {
       type: String,
-      required: [true, 'Phân loại dự án là bắt buộc (ví dụ: (Client), (Personal))'],
+      default: '',
       trim: true,
+    },
+    description: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    role: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    year: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    tags: {
+      type: [String],
+      default: [],
     },
     col1Img1: {
       type: String,
-      required: [true, 'URL ảnh cột 1 (trên) là bắt buộc'],
-      trim: true,
+      default: '',
     },
     col1Img2: {
       type: String,
-      required: [true, 'URL ảnh cột 1 (dưới) là bắt buộc'],
-      trim: true,
+      default: '',
     },
     col2Img: {
       type: String,
-      required: [true, 'URL ảnh cột 2 (chính) là bắt buộc'],
-      trim: true,
+      default: '',
     },
     link: {
       type: String,
       default: '#',
       trim: true,
+    },
+    htmlBase64: {
+      type: String,
+      default: '',
     },
     order: {
       type: Number,

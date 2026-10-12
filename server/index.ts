@@ -12,7 +12,8 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Đảm bảo MongoDB Atlas được kết nối trước khi xử lý request
 app.use(async (_req, _res, next) => {
@@ -42,9 +43,13 @@ router.get('/health', (_req: Request, res: Response) => {
 /**
  * Lấy danh sách toàn bộ dự án từ MongoDB Atlas
  */
-router.get('/projects', async (_req: Request, res: Response) => {
+router.get('/projects', async (req: Request, res: Response) => {
   try {
-    const projects = await Project.find().sort({ order: 1, id: 1 }).lean();
+    const query = Project.find().sort({ order: 1, id: 1 });
+    if (!req.query.includeHtml) {
+      query.select('-htmlBase64');
+    }
+    const projects = await query.lean();
 
     if (!projects || projects.length === 0) {
       return res.json({
@@ -71,25 +76,88 @@ router.get('/projects', async (_req: Request, res: Response) => {
 });
 
 /**
+ * Chơi game trực tiếp từ MongoDB (giải mã file HTML từ base64)
+ */
+router.get('/projects/:id/play', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findOne({ id }).select('htmlBase64 title id link').lean();
+
+    if (!project) {
+      return res.status(404).send('<h1>Không tìm thấy dự án</h1>');
+    }
+
+    if (project.htmlBase64) {
+      const html = Buffer.from(project.htmlBase64, 'base64').toString('utf-8');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      return res.send(html);
+    }
+
+    if (project.link && (project.link.endsWith('.html') || project.link.startsWith('/'))) {
+      return res.redirect(project.link);
+    }
+
+    return res.status(404).send('<h1>Dự án chưa có dữ liệu HTML Game</h1>');
+  } catch (error) {
+    console.error('Lỗi khi mở game:', error);
+    return res.status(500).send('<h1>Lỗi server khi mở game</h1>');
+  }
+});
+
+/**
+ * Lấy chi tiết 1 dự án theo ID (bao gồm cả htmlBase64 nếu có)
+ */
+router.get('/projects/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findOne({ id }).lean();
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy dự án' });
+    }
+    return res.json({ success: true, data: project });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: (error as Error).message });
+  }
+});
+
+
+/**
  * Thêm một dự án mới vào MongoDB Atlas
  */
 router.post('/projects', async (req: Request, res: Response) => {
   try {
-    const { id, title, category, col1Img1, col1Img2, col2Img, link, order } = req.body;
+    const {
+      id,
+      title,
+      category,
+      description,
+      role,
+      year,
+      tags,
+      col1Img1,
+      col1Img2,
+      col2Img,
+      link,
+      order,
+    } = req.body;
 
-    if (!id || !title || !category || !col1Img1 || !col1Img2 || !col2Img) {
+    if (!id || !title || !col2Img) {
       return res.status(400).json({
         success: false,
-        message: 'Vui lòng cung cấp đầy đủ thông tin dự án (id, title, category, col1Img1, col1Img2, col2Img)',
+        message: 'Vui lòng cung cấp tối thiểu mã dự án (id), tên dự án (title) và ảnh chính (col2Img)',
       });
     }
 
     const newProject = new Project({
       id,
       title,
-      category,
-      col1Img1,
-      col1Img2,
+      category: category || '',
+      description: description || '',
+      role: role || '',
+      year: year || '',
+      tags: Array.isArray(tags) ? tags : [],
+      col1Img1: col1Img1 || '',
+      col1Img2: col1Img2 || '',
       col2Img,
       link: link || '#',
       order: order || 0,
@@ -195,16 +263,37 @@ router.get('/contact', async (_req: Request, res: Response) => {
   }
 });
 
-// Gắn router vào cả '/api' và '/' để tương thích linh hoạt với cả Vercel Serverless và Standalone server
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const distPath = path.resolve(__dirname, '../dist');
+
+// Gắn router vào '/api'
 app.use('/api', router);
-app.use('/', router);
+
+// Phục vụ frontend tĩnh trong môi trường Standalone / VPS / Local Production nếu dist đã được build
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.use((req: Request, res: Response, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api')) {
+      return res.sendFile(path.join(distPath, 'index.html'));
+    }
+    next();
+  });
+} else {
+  app.use('/', router);
+}
 
 // Khởi chạy server nếu chạy cục bộ hoặc trên máy chủ độc lập (không phải Vercel Serverless)
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
-    console.log(`🚀 [Server] Đang chạy tại: http://localhost:${PORT}`);
+    console.log(`🚀 [Production Server] Đang chạy tại: http://localhost:${PORT}`);
     console.log(`📦 [API] Lấy danh sách dự án: http://localhost:${PORT}/api/projects`);
   });
 }
 
 export default app;
+
