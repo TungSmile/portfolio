@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Sparkles, Mail } from 'lucide-react';
+import { ArrowUp, Mail } from 'lucide-react';
 import FadeIn from './FadeIn';
 
 export const Footer: React.FC = () => {
@@ -10,6 +10,7 @@ export const Footer: React.FC = () => {
   return (
     <footer id="contact" className="bg-[#0C0C0C] text-[#D7E2EA] pt-16 pb-12 px-6 md:px-10 border-t border-white/5 relative z-20">
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
+
         <FadeIn delay={0.1} y={25} className="mb-12">
           <h2 className="hero-heading font-black uppercase text-3xl sm:text-5xl md:text-6xl tracking-tight m-0">
             Cảm ơn bạn đã ghé thăm
