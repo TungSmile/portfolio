@@ -135,6 +135,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     )
   );
 
+  const projectLink = project.link && project.link !== '#' ? project.link : '/tree.html';
+
+  const handleCardClick = () => {
+    window.open(projectLink, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div
       ref={containerRef}
@@ -145,14 +151,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     >
       <motion.div
         style={{ scale }}
-        className="w-full max-w-6xl rounded-[36px] sm:rounded-[48px] md:rounded-[56px] border-2 border-[#D7E2EA] bg-[#0C0C0C]/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.95)] flex flex-col justify-between"
+        onClick={handleCardClick}
+        role="button"
+        tabIndex={0}
+        aria-label={`Xem dự án ${project.title}`}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleCardClick();
+          }
+        }}
+        className="group w-full max-w-6xl rounded-[36px] sm:rounded-[48px] md:rounded-[56px] border-2 border-[#D7E2EA] bg-[#0C0C0C]/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.95)] flex flex-col justify-between cursor-pointer transition-all duration-300 hover:border-white hover:shadow-[0_35px_80px_rgba(215,226,234,0.12)] focus:outline-none focus:ring-2 focus:ring-[#D7E2EA]/50"
       >
         {/* Main 2-column layout: LEFT = Image (Square), RIGHT = Text info */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
           {/* BÊN TRÁI: ẢNH DỰ ÁN (HÌNH VUÔNG) */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center gap-4 w-full">
             {/* Ảnh chính hình vuông */}
-            <div className="group relative w-full aspect-square max-w-[420px] sm:max-w-[450px] lg:max-w-[480px] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] overflow-hidden bg-[#161618] border border-[#D7E2EA]/20 shadow-lg">
+            <div className="relative w-full aspect-square max-w-[420px] sm:max-w-[450px] lg:max-w-[480px] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] overflow-hidden bg-[#161618] border border-[#D7E2EA]/20 shadow-lg">
               <img
                 src={activeImage}
                 alt={project.title}
@@ -214,7 +230,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               </div>
 
               {/* Tên dự án */}
-              <h3 className="font-extrabold uppercase text-2xl sm:text-3xl lg:text-4xl text-white m-0 tracking-tight leading-tight">
+              <h3 className="font-extrabold uppercase text-2xl sm:text-3xl lg:text-4xl text-white m-0 tracking-tight leading-tight group-hover:text-[#D7E2EA] transition-colors">
                 {project.title}
               </h3>
 
@@ -248,9 +264,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             </div>
 
             {/* Nút hành động xem dự án */}
-            <div className="pt-4 border-t border-white/10 flex items-center justify-start gap-4">
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="pt-4 border-t border-white/10 flex items-center justify-start gap-4"
+            >
               <LiveProjectButton
-                href={project.link && project.link !== '#' ? project.link : '/tree.html'}
+                href={projectLink}
               />
             </div>
           </div>
