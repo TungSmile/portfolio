@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IProject extends Document {
+export interface ProjectData {
   id: string;
   title: string;
   category: string;
@@ -16,6 +16,10 @@ export interface IProject extends Document {
   order?: number;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface IProject extends Document, Omit<ProjectData, 'id'> {
+  id: string;
 }
 
 const ProjectSchema: Schema = new Schema(

@@ -24,7 +24,7 @@ export const PROJECTS: ProjectData[] = [
   {
     id: '01',
     title: 'The Lost Forest Puzzle',
-    category: 'ADR',
+    category: '',
     description:
       '🌲 Bước vào một thế giới bí ẩn… nơi những câu chuyện được giấu kín sâu trong rừng!  \n'
       + 'Thư giãn đầu óc với những thử thách hóc búa trong Trò chơi giải đố Rừng Mất Tích; di chuyển các vật thể, kết hợp chúng và giải các câu đố 🔍💎 \n'
@@ -40,7 +40,7 @@ export const PROJECTS: ProjectData[] = [
   {
     id: '02',
     title: 'Pixel by Color: Pixel Art',
-    category: 'ADR',
+    category: '',
     description:
       'Pixel by Color: Pixel Art" là một trò chơi thu thập nhiều tác phẩm nghệ thuật pixel khổng lồ từ khắp nơi trên thế giới hoặc cho phép bạn nhập hình ảnh của riêng mình để tạo ra trải nghiệm tô màu theo số cá nhân hóa.\n'
     ,
@@ -53,8 +53,21 @@ export const PROJECTS: ProjectData[] = [
   },
   {
     id: '03',
+    title: 'Wood Cube Out 3D',
+    category: '',
+    description:
+      'Wood Cube Out 3D là một trò chơi giải đố hấp dẫn, trong đó người chơi phải tháo rời các khối gỗ được kết nối bằng ốc vít trong không gian 3D. Mỗi cấp độ sẽ đưa ra cho người chơi những tình huống đòi hỏi sự chính xác và tư duy thông minh để tháo rời các thành phần theo cách hợp lý. Các ốc vít cần được tháo rời theo màu sắc phù hợp để giải phóng các khối gỗ và tiến tới cấp độ tiếp theo. Mục tiêu chính của trò chơi là tháo rời các vật thể bằng cách sắp xếp và tháo ốc vít cùng màu. Trò chơi không chỉ đòi hỏi tư duy chiến lược mà còn đòi hỏi sự tập trung để tránh bị tắc nghẽn và hoàn thành nhiệm vụ một cách nhanh chóng và hiệu quả!!!',
+    role: 'PA', year: '2025 — Present',
+    tags: ['Puzzle', 'Adr', 'Ios', 'Game 3D', '1M Downloads'],
+    col1Img1: '/icon/cube.png',
+    col1Img2: '',
+    col2Img: '',
+    link: '/cube.html',
+  },
+  {
+    id: '04',
     title: 'Annoying Puzzle Game',
-    category: 'ADR',
+    category: '',
     description:
       'Bạn sẽ được tham gia những câu đố vui nhộn, mang tính giải trí đầy trí tuệ! \n'
       + 'Câu Đố Đa Dạng: Giữ người chơi luôn hứng thú với các mức độ khó khác nhau.\n'
@@ -68,9 +81,9 @@ export const PROJECTS: ProjectData[] = [
     link: '/anoy.html',
   },
   {
-    id: '04',
+    id: '05',
     title: 'Annoying Puzzle Game 2',
-    category: 'ADR',
+    category: '',
     description:
       'Bây giờ hãy sẵn sàng chào đón những câu đố vui nhộn và những thử thách thú vị trong Annoying Puzzle Game 2! Đây là một trò chơi trí tuệ. Hãy tận hưởng những trò chơi trí tuệ được thiết kế dành cho những người đam mê những trải nghiệm khó khăn và những thử thách trí tuệ khác!🧩✨',
     role: 'PA', year: '2025 — Present',
@@ -79,20 +92,7 @@ export const PROJECTS: ProjectData[] = [
     col1Img2: '',
     col2Img: '',
     link: '/anoy2.html',
-  },
-  {
-    id: '05',
-    title: 'Wood Cube Out 3D',
-    category: 'ADR',
-    description:
-      'Wood Cube Out 3D là một trò chơi giải đố hấp dẫn, trong đó người chơi phải tháo rời các khối gỗ được kết nối bằng ốc vít trong không gian 3D. Mỗi cấp độ sẽ đưa ra cho người chơi những tình huống đòi hỏi sự chính xác và tư duy thông minh để tháo rời các thành phần theo cách hợp lý. Các ốc vít cần được tháo rời theo màu sắc phù hợp để giải phóng các khối gỗ và tiến tới cấp độ tiếp theo. Mục tiêu chính của trò chơi là tháo rời các vật thể bằng cách sắp xếp và tháo ốc vít cùng màu. Trò chơi không chỉ đòi hỏi tư duy chiến lược mà còn đòi hỏi sự tập trung để tránh bị tắc nghẽn và hoàn thành nhiệm vụ một cách nhanh chóng và hiệu quả!!!',
-    role: 'PA', year: '2025 — Present',
-    tags: ['Puzzle', 'Adr', 'Ios', 'Game 3D', '1M Downloads'],
-    col1Img1: '/icon/cube.png',
-    col1Img2: '',
-    col2Img: '',
-    link: '/cube.html',
-  },
+  }
 ];
 
 interface ProjectCardProps {

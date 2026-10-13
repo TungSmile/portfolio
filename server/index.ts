@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './db';
-import Project from './models/Project';
+import Project, { ProjectData } from './models/Project';
 import Contact from './models/Contact';
 
 dotenv.config();
